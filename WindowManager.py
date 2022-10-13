@@ -19,6 +19,27 @@ class WindowManager(tk.Toplevel):
         self.__canvas = tk.Canvas(self)
         self.__canvas.pack(expand=True, fill=tk.BOTH, padx=10, pady=10)
 
+        if points == 1:
+            self.__canvas.create_oval(345,270,355,280, fill="black")
+        elif points == 2:
+            self.__canvas.create_oval(245,270,255,280, fill="black")
+            self.__canvas.create_oval(445,270,455,280, fill="black")
+        elif points == 3:
+            self.__canvas.create_oval(245,370,255,380, fill="black")
+            self.__canvas.create_oval(445,370,455,380, fill="black")
+            self.__canvas.create_oval(345,170,355,180, fill="black")
+        elif points == 4:
+            self.__canvas.create_oval(245,370,255,380, fill="black")
+            self.__canvas.create_oval(445,370,455,380, fill="black")
+            self.__canvas.create_oval(245,170,255,180, fill="black")
+            self.__canvas.create_oval(445,170,455,180, fill="black")
+        elif points == 5:
+            self.__canvas.create_oval(225,440,235,450, fill="black")
+            self.__canvas.create_oval(445,440,455,450, fill="black")
+            self.__canvas.create_oval(225,230,235,240, fill="black")
+            self.__canvas.create_oval(445,230,455,240, fill="black")
+            self.__canvas.create_oval(345,70,355,80, fill="black")
+
         
         #---------------- Mostrar ventana ------------------------
 
