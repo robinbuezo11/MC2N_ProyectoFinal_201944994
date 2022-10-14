@@ -1,13 +1,12 @@
 import tkinter as tk
-from tkinter import BOTH, messagebox as msgbx
-from tkinter import ttk
 from tkinter import simpledialog
+import turtle as tt
 
 class WindowManager(tk.Toplevel):
     def __init__(self) -> None:
         super().__init__()
         self.title('Grafos Planos')
-        self.geometry('700x550')
+        self.geometry('600x600')
         self.config(background='sky blue')
         self.resizable(False,False)
 
@@ -16,38 +15,68 @@ class WindowManager(tk.Toplevel):
     
         #------------------------------ Canvas --------------------------------
 
-        self.__canvas = tk.Canvas(self)
-        self.__canvas.pack(expand=True, fill=tk.BOTH, padx=10, pady=10)
+        self.__canvas = tk.Canvas(self, width=600, height=600)
+        self.__canvas.pack()
+        self.__screen = tt.TurtleScreen(self.__canvas)
 
-        if points == 1:
-            self.__canvas.create_oval(345,270,355,280, fill="black")
-        elif points == 2:
-            self.__canvas.create_oval(245,270,255,280, fill="black")
-            self.__canvas.create_oval(445,270,455,280, fill="black")
-        elif points == 3:
-            self.__canvas.create_oval(245,370,255,380, fill="black")
-            self.__canvas.create_oval(445,370,455,380, fill="black")
-            self.__canvas.create_oval(345,170,355,180, fill="black")
-        elif points == 4:
-            self.__canvas.create_oval(245,370,255,380, fill="black")
-            self.__canvas.create_oval(445,370,455,380, fill="black")
-            self.__canvas.create_oval(245,170,255,180, fill="black")
-            self.__canvas.create_oval(445,170,455,180, fill="black")
-        elif points == 5:
-            self.__canvas.create_oval(225,440,235,450, fill="black")
-            self.__canvas.create_oval(445,440,455,450, fill="black")
-            self.__canvas.create_oval(225,230,235,240, fill="black")
-            self.__canvas.create_oval(445,230,455,240, fill="black")
-            self.__canvas.create_oval(345,70,355,80, fill="black")
-
-        
         #---------------- Mostrar ventana ------------------------
 
         self.focus()
+        self.transient(self.master)
         self.grab_set()
 
-    
+        if points == 1:
+            vertex1 = tt.RawTurtle(canvas=self.__canvas, shape='circle')
+            vertex1.penup()
+        elif points == 2:
+            vertex1 = tt.RawTurtle(canvas=self.__canvas, shape='circle')
+            vertex1.penup()
+            vertex1.setpos(-150,0)
+            vertex2 = tt.RawTurtle(canvas=self.__canvas, shape='circle')
+            vertex2.penup()
+            vertex2.setpos(150,0)
+        elif points == 3:
+            vertex1 = tt.RawTurtle(canvas=self.__canvas, shape='circle')
+            vertex1.penup()
+            vertex1.setpos(0,150)
+            vertex2 = tt.RawTurtle(canvas=self.__canvas, shape='circle')
+            vertex2.penup()
+            vertex2.setpos(-150,-150)
+            vertex3 = tt.RawTurtle(canvas=self.__canvas, shape='circle')
+            vertex3.penup()
+            vertex3.setpos(150,-150)
+        elif points == 4:
+            vertex1 = tt.RawTurtle(canvas=self.__canvas, shape='circle')
+            vertex1.penup()
+            vertex1.setpos(-150,150)
+            vertex2 = tt.RawTurtle(canvas=self.__canvas, shape='circle')
+            vertex2.penup()
+            vertex2.setpos(150,150)
+            vertex3 = tt.RawTurtle(canvas=self.__canvas, shape='circle')
+            vertex3.penup()
+            vertex3.setpos(-150,-150)
+            vertex4 = tt.RawTurtle(canvas=self.__canvas, shape='circle')
+            vertex4.penup()
+            vertex4.setpos(150,-150)
+        elif points == 5:
+            vertex1 = tt.RawTurtle(canvas=self.__canvas, shape='circle')
+            vertex1.penup()
+            vertex1.setpos(-150,0)
+            vertex2 = tt.RawTurtle(canvas=self.__canvas, shape='circle')
+            vertex2.penup()
+            vertex2.setpos(150,0)
+            vertex3 = tt.RawTurtle(canvas=self.__canvas, shape='circle')
+            vertex3.penup()
+            vertex3.setpos(-150,-200)
+            vertex4 = tt.RawTurtle(canvas=self.__canvas, shape='circle')
+            vertex4.penup()
+            vertex4.setpos(150,-200)
+            vertex5 = tt.RawTurtle(canvas=self.__canvas, shape='circle')
+            vertex5.penup()
+            vertex5.setpos(0,200)
+
+
     #------------------------- Functions -------------------------
 
     
-        
+    

@@ -1,5 +1,5 @@
 from tkinter.filedialog import Open
-from WindowMain import WindowMain
+from WindowMain import *
 
 window = WindowMain()
 window.mainloop()
