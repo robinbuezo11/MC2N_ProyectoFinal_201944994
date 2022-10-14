@@ -25,6 +25,11 @@ class WindowManager(tk.Toplevel):
         self.transient(self.master)
         self.grab_set()
 
+        self.__createPoints(points)
+
+    #------------------------- Functions -------------------------
+
+    def __createPoints(self, points):
         if points == 1:
             vertex1 = tt.RawTurtle(canvas=self.__canvas, shape='circle')
             vertex1.penup()
@@ -74,9 +79,4 @@ class WindowManager(tk.Toplevel):
             vertex5 = tt.RawTurtle(canvas=self.__canvas, shape='circle')
             vertex5.penup()
             vertex5.setpos(0,200)
-
-
-    #------------------------- Functions -------------------------
-
-    
     
