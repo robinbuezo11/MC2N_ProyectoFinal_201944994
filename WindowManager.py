@@ -107,7 +107,7 @@ class WindowManager(tk.Toplevel):
             else:
                 incolision = False
                 for vertex in self.vertexs:
-                    if vertex.distance(colision[1][sp.symbols('x')],colision[1][sp.symbols('y')]) < 5:
+                    if vertex.distance(colision[1][sp.symbols('x')],colision[1][sp.symbols('y')]) < 8:
                         incolision = True
 
                 if not incolision:        
@@ -142,7 +142,7 @@ class WindowManager(tk.Toplevel):
 
             result = sp.solve((ecuationline, ecuationnewline),(x,y))
 
-            if len(result) > 0:
+            if len(result) > 0 and result[x] > min(line[1]['x'],line[0]['x']) and result[x] < max(line[1]['x'],line[0]['x']) and result[y] > min(line[1]['y'],line[0]['y']) and result[y] < max(line[1]['y'],line[0]['y']):
                 return [True, result]
         return [False, '']
 
