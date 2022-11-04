@@ -1,6 +1,8 @@
 import tkinter as tk
+from tkinter import messagebox as msg
 from tkinter import simpledialog
 import turtle as tt
+import sympy as sp
 
 class WindowManager(tk.Toplevel):
     def __init__(self) -> None:
@@ -25,8 +27,8 @@ class WindowManager(tk.Toplevel):
         self.transient(self.master)
         self.grab_set()
 
-        vertexs = self.__createPoints(points)
-        for vertex in vertexs:
+        self.vertexs = self.__createPoints(points)
+        for vertex in self.vertexs:
             vertex.onclick(self.drawLine)
 
     #------------------------- Functions -------------------------
@@ -37,6 +39,7 @@ class WindowManager(tk.Toplevel):
         self.line.penup()
         self.line.setpos(-255,255)
         self.line.onclick(self.drawLine)
+        self.lineroute = []
         if points == 1:
             vertex1 = tt.RawTurtle(canvas=self.__canvas, shape='circle')
             vertex1.penup()
@@ -93,11 +96,55 @@ class WindowManager(tk.Toplevel):
             return [vertex1, vertex2, vertex3, vertex4, vertex5]
 
     def drawLine(self,x,y):
+        x1, y1 = self.line.xcor(), self.line.ycor()
         self.line.setpos(x,y)
         if self.line.isdown():
-            self.line.penup()
+            newline = [{'x': x1, 'y': y1},{'x': self.line.xcor(), 'y': self.line.ycor()}]
+            colision = self.lineColision(newline)
+            if not colision[0]:
+                self.line.penup()
+                self.lineroute.append(newline)
+            else:
+                incolision = False
+                for vertex in self.vertexs:
+                    if vertex.distance(colision[1][sp.symbols('x')],colision[1][sp.symbols('y')]) < 5:
+                        incolision = True
+
+                if not incolision:        
+                    msg.showwarning('Colision', 'Existe una colision entre aristas, el grafo ya no es plano')
+                    self.line.undo()
+                    self.line.undo()
+                    return
+                self.line.penup()
+                self.lineroute.append(newline)
+
         else:
             self.line.pendown()
+
+    def lineColision(self, newline):
+        for line in self.lineroute:
+            x, y, b = sp.symbols('x y b')
+            #Ecuacion linea en recorrido
+            if (line[1]['x'] - line[0]['x']) != 0:
+                pendline = (line[1]['y'] - line[0]['y'])/(line[1]['x'] - line[0]['x'])
+            else:
+                pendline = 1
+            bline = sp.solve(line[0]['x']*pendline + b - line[0]['y'], b)
+            ecuationline = sp.Eq(y - pendline*x, bline[0])
+
+            #Ecuacion nueva linea
+            if (newline[1]['x'] - newline[0]['x']) != 0:
+                pendnewline = (newline[1]['y'] - newline[0]['y'])/(newline[1]['x'] - newline[0]['x'])
+            else:
+                pendnewline = 1
+            bnewline = sp.solve(newline[0]['x']*pendnewline + b - newline[0]['y'], b)
+            ecuationnewline = sp.Eq(y - pendnewline*x, bnewline[0])
+
+            result = sp.solve((ecuationline, ecuationnewline),(x,y))
+
+            if len(result) > 0:
+                return [True, result]
+        return [False, '']
 
 
         
