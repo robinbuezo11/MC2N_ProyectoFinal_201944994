@@ -25,14 +25,22 @@ class WindowManager(tk.Toplevel):
         self.transient(self.master)
         self.grab_set()
 
-        self.__createPoints(points)
+        vertexs = self.__createPoints(points)
+        for vertex in vertexs:
+            vertex.onclick(self.drawLine)
 
     #------------------------- Functions -------------------------
 
     def __createPoints(self, points):
+        self.line = tt.RawTurtle(canvas=self.__canvas)
+        self.line.hideturtle()
+        self.line.penup()
+        self.line.setpos(-255,255)
+        self.line.onclick(self.drawLine)
         if points == 1:
             vertex1 = tt.RawTurtle(canvas=self.__canvas, shape='circle')
             vertex1.penup()
+            return [vertex1]
         elif points == 2:
             vertex1 = tt.RawTurtle(canvas=self.__canvas, shape='circle')
             vertex1.penup()
@@ -40,6 +48,7 @@ class WindowManager(tk.Toplevel):
             vertex2 = tt.RawTurtle(canvas=self.__canvas, shape='circle')
             vertex2.penup()
             vertex2.setpos(150,0)
+            return [vertex1, vertex2]
         elif points == 3:
             vertex1 = tt.RawTurtle(canvas=self.__canvas, shape='circle')
             vertex1.penup()
@@ -50,6 +59,7 @@ class WindowManager(tk.Toplevel):
             vertex3 = tt.RawTurtle(canvas=self.__canvas, shape='circle')
             vertex3.penup()
             vertex3.setpos(150,-150)
+            return [vertex1, vertex2, vertex3]
         elif points == 4:
             vertex1 = tt.RawTurtle(canvas=self.__canvas, shape='circle')
             vertex1.penup()
@@ -63,6 +73,7 @@ class WindowManager(tk.Toplevel):
             vertex4 = tt.RawTurtle(canvas=self.__canvas, shape='circle')
             vertex4.penup()
             vertex4.setpos(150,-150)
+            return [vertex1, vertex2, vertex3, vertex4]
         elif points == 5:
             vertex1 = tt.RawTurtle(canvas=self.__canvas, shape='circle')
             vertex1.penup()
@@ -79,4 +90,16 @@ class WindowManager(tk.Toplevel):
             vertex5 = tt.RawTurtle(canvas=self.__canvas, shape='circle')
             vertex5.penup()
             vertex5.setpos(0,200)
+            return [vertex1, vertex2, vertex3, vertex4, vertex5]
+
+    def drawLine(self,x,y):
+        self.line.setpos(x,y)
+        if self.line.isdown():
+            self.line.penup()
+        else:
+            self.line.pendown()
+
+
+        
     
+
